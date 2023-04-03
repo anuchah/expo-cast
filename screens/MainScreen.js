@@ -21,27 +21,27 @@ try {
 }
 
 function DashBoard() {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    let auth = getAuth();
-    auth.onAuthStateChanged((us) => {
-      setUser(us)
-    })
-    
-  }, [])
+  // const [user, setUser] = useState(null);
+  // useEffect(() => {
+  //   let auth = getAuth();
+  //   auth.onAuthStateChanged((us) => {
+  //     setUser(us)
+  //   })
 
-  if (user == null) {
-    return <LoginScreen />
-  }
+  // }, [])
+
+  // if (user == null) {
+  //   return <LoginScreen />
+  // }
 
   return (
     <View style={styles.container}>
-      <Text>Welcome {user.phoneNumber}</Text>
+      <Text>Welcome</Text>
     </View>
   )
 }
 
-function Welcome(){
+function Welcome() {
   return <DashBoard />
 }
 
@@ -55,19 +55,19 @@ function Joke() {
 
 function Profile({ navigation }) {
 
-  const signOutHandle = () => {
-    try {
-      getAuth().signOut()
-      navigation.navigate("Home")
-    } catch (error) {
-      // DO SHOMETHING
-    }
-  }
+  // const signOutHandle = () => {
+  //   try {
+  //     getAuth().signOut()
+  //     navigation.navigate("Home")
+  //   } catch (error) {
+  //     // DO SHOMETHING
+  //   }
+  // }
 
   return (
     <View style={styles.container}>
       <Text>Profile</Text>
-      <Button onPress={() => signOutHandle()} title="Logout" color='error' />
+      <Button onPress={() => alert("Logout")} title="Logout" color='error'/>
     </View>
   )
 }
@@ -89,7 +89,7 @@ export default function MainScreen({ navigation }) {
               <MaterialCommunityIcons name='home' color={color} size={26} />
             )
           }}
-          
+
         />
         <Tab.Screen
           name="Joke"

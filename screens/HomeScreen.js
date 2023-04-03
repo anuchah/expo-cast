@@ -5,7 +5,7 @@ import { Button } from "@react-native-material/core";
 export default function HomeScreen({navigation}) {
 
     const goLogin = () => {
-        navigation.navigate("Login")
+        navigation.navigate("Main")
     }
 
     
