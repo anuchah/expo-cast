@@ -13,7 +13,7 @@ import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-fi
 import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
 
     const app = getApp()
     const auth = getAuth()
@@ -34,7 +34,7 @@ export default function LoginScreen({navigation}) {
             );
             setVerificationId(verificationId);
             showMessage({
-                text: 'Verification code has been sent to your phone.',
+                text: 'กำลังส่งรหัสยืนยันไปที่โทรศัพท์คุณ 😛',
             });
         } catch (err) {
             showMessage({ text: `Error: ${err.message}`, color: 'red' });
@@ -48,46 +48,54 @@ export default function LoginScreen({navigation}) {
                 verificationCode
             );
             await signInWithCredential(auth, credential);
-            showMessage({ text: 'Phone authentication successful 👍' });
+            showMessage({ text: 'เข้าสู่ระบบเสร็จสมบูรณ์ 😜' });
             navigation.navigate('Main')
+            // navigation.navigate('Joke')
         } catch (err) {
             showMessage({ text: `Error: ${err.message}`, color: 'red' });
         }
     }
 
     return (
-        <View style={{ padding: 20, marginTop: 50 }}>
+        <View style={{ padding: 20 , backgroundColor: "#F7D5FF", height: '100%'}}>
+
             <FirebaseRecaptchaVerifierModal
                 ref={recaptchaVerifier}
                 firebaseConfig={app.options}
             />
-            <Text style={{ marginTop: 20 }}>ใส่หมายเลขโทรศัพท์</Text>
+            <Text style={{ marginTop: 100, fontSize: 18, marginBottom: 5 }}>Login</Text>
             <TextInput
-                style={{ marginVertical: 10, fontSize: 17 }}
-                placeholder="+66 999 999 9999"
+                style={styles.input}
+                placeholder="Tel +66"
                 autoFocus
                 autoCompleteType="tel"
                 keyboardType="phone-pad"
                 textContentType="telephoneNumber"
                 onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
             />
-            <Button
+            <TouchableOpacity style={styles.button} disabled={!phoneNumber}>
+                <Text style={styles.buttonText} onPress={() => onSendVerifyCode()}>Send verification code</Text>
+            </TouchableOpacity>
+            {/* <Button
                 title="Send Verification Code"
                 disabled={!phoneNumber}
                 onPress={() => onSendVerifyCode()}
-            />
-            <Text style={{ marginTop: 20 }}>Enter Verification code</Text>
+            /> */}
+            <Text style={{ marginTop: 20, fontSize: 18, marginBottom: 5 }}>ยืนยันรหัส</Text>
             <TextInput
-                style={{ marginVertical: 10, fontSize: 17 }}
+                style={styles.input}
                 editable={!!verificationId}
                 placeholder="123456"
                 onChangeText={setVerificationCode}
             />
-            <Button
+            <TouchableOpacity style={styles.button} disabled={!phoneNumber}>
+                <Text style={styles.buttonText} onPress={() => onConfirmVerifyCode()}>Confirm Verification Code</Text>
+            </TouchableOpacity>
+            {/* <Button
                 title="Confirm Verification Code"
                 disabled={!verificationId}
                 onPress={() => onConfirmVerifyCode()}
-            />
+            /> */}
             {message ? (
                 <TouchableOpacity
                     style={[
@@ -116,8 +124,27 @@ export default function LoginScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+
+    input: {
+        height: 40,
+        borderWidth: 1,
+        borderColor: '#FF5C0B',
+        borderRadius: 4,
+        paddingHorizontal: 10,
+        marginBottom: 10,
+    },
+    button: {
+        backgroundColor: '#F15ACB',
+        paddingVertical: 10,
+        borderRadius: 4,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
 });
